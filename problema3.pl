@@ -16,10 +16,10 @@ repetir([X],[X-X]).
 repetir([Cola|Lista1],[Cola-Cola|Lista2]):-repetir(Lista1,Lista2).
 
 %---- Insertar ----  insert(10,2,[1,2,3,4],R).
-insert(X,0,L1,[X|L1]). 
-insert(X,Pos,[C|R],[C|R2]):- 
+insertar(X,0,L1,[X|L1]). 
+insertar(X,Pos,[C|R],[C|R2]):- 
     Pos1 is Pos-1, 
-    insert(X,Pos1,R,R2). 
+    insertar(X,Pos1,R,R2). 
 
 
 %------- Dividir ----- dividir([2,4,6,8,10],X,Y).
