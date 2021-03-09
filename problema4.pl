@@ -1,29 +1,42 @@
-%---- Reverso ----  reverso([a,b,c,d,e],X).
-reverso([], []).
-reverso([Cabeza | Cola],Reverso):- 
-    reverso(Cola, ColaReverso),
-    concatenacion(ColaReverso,[Cabeza],Reverso).
+numero(1).
+numero(2).
+numero(3).
+numero(4).
 
-concatenacion([],Lista,Lista).
-concatenacion([Cabeza|Lista1],Lista2,[Cabeza|Lista3]):-concatenacion(Lista1,Lista2,Lista3).
+lineas():-  write('-'), write('-'), write('-'), write('-'), write('-'), write('-'), write('-'), write('-'), write('-'),
+     write('-'), write('-'),write('-'), write('-'), write('-'), write('-'), nl.
 
-%---- Polindrome ----  palinfrome([1,2,2,1]).
-palindrome(Xs):- reverso(Xs, Xs).
+tablero(A, B, C, D) :- 
+    write('| '), write(A), write('  '), write(B), write(' | '), write(C), write('  '), write(D), write(' |'), nl.
 
-%---- Duplicar ----  repetir([1,2,3],R).
-repetir([],[]).
-repetir([X],[X-X]). 
-repetir([C|L1],[C-C|L2]):-repetir(L1,L2).
+sudoku(F1C1, F1C2, F1C3, F1C4, F2C1, F2C2, F2C3, F2C4, F3C1, F3C2, F3C3, F3C4, F4C1, F4C2, F4C3, F4C4) :- 
+    solved(F1C1, F1C2, F1C3, F1C4, F2C1, F2C2, F2C3, F2C4, F3C1, F3C2, F3C3, F3C4, F4C1, F4C2, F4C3, F4C4),
+    lineas(),
+	tablero(F1C1, F1C2, F1C3, F1C4),
+	tablero(F2C1, F2C2, F2C3, F2C4),
+    lineas(),
+	tablero(F3C1, F3C2, F3C3, F3C4),
+	tablero(F4C1, F4C2, F4C3, F4C4),
+    lineas().
 
-%---- Insertar ----  insert(10,2,[1,2,3,4],R).
-insert(X,0,L1,[X|L1]). 
-insert(X,Pos,[C|R],[C|R2]):- 
-Pos1 is Pos-1, 
-insert(X,Pos1,R,R2). 
+esdiferente(A, B, C, D) :- numero(A), numero(B), numero(C), numero(D), A\=B, A\=C, A\=D, B\=C, B\=D, C\=D.
 
+solved(F1C1, F1C2, F1C3, F1C4, F2C1, F2C2, F2C3, F2C4, F3C1, F3C2, F3C3, F3C4, F4C1, F4C2, F4C3, F4C4) :-
+% ----------- FILAS -----------
+	esdiferente(F1C1, F1C2, F1C3, F1C4), 
+	esdiferente(F2C1, F2C2, F2C3, F2C4),
+	esdiferente(F3C1, F3C2, F3C3, F3C4),
+	esdiferente(F4C1, F4C2, F4C3, F4C4), 
+% ----------- COLUMNAS -----------
+	esdiferente(F1C1, F2C1, F3C1, F4C1), 
+	esdiferente(F1C2, F2C2, F3C2, F4C2), 
+	esdiferente(F1C3, F2C3, F3C3, F4C3), 
+	esdiferente(F1C4, F2C4, F3C4, F4C4), 
+% ----------- BLOQUES -----------
+	esdiferente(F1C1, F1C2, F2C1, F2C2),
+	esdiferente(F1C3, F1C4, F2C3, F2C4), 
+	esdiferente(F3C1, F3C2, F4C1, F4C2), 
+	esdiferente(F3C3, F3C4, F4C3, F4C4).
 
-%------- Dividir ----- dividir([2,4,6,8,10],X,Y).
-dividir([],[],[]).
-dividir([X],[X],[]).
-dividir([X,Y|Lista],[X|Lista1],[Y|Lista2]):-
-    dividir(Lista,Lista1,Lista2).
+%  sudoku(2,_,_,_,   _,1,_,_,   _,_,3,_,   _,3,_,4).
+%  sudoku(_,1,_,_,   2,_,_,_,   _,_,3,_,   _,_,_,1).
